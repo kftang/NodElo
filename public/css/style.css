@@ -1,0 +1,92 @@
+body {
+    margin: 0 auto;
+}
+ul{
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    background-color: gray;
+}
+li{
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Tahoma", Tahoma, serif;
+}
+li a{
+    padding: 14px 24px;
+    display: block;
+}
+li.active {
+    background-color: darkgray;
+}
+li a:link, li a:visited{
+    color: white;
+    font-style: normal;
+    text-decoration: none;
+}
+h1 {
+    font-family: "Helvetica", Helvetica, serif;
+    text-align: center;
+}
+table {
+    border-collapse: collapse;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Cambria", Cambria, serif;
+    font-size: 20pt;
+}
+th, td {
+    border: 1px solid black;
+    padding: 5px;
+}
+img {
+    display: block;
+    margin: auto;
+}
+label {
+    margin: 1%;
+    display: inline-block;
+    font-family: "Helvetica", Helvetica, serif;
+}
+button :not(.add) {
+    margin: 1%;
+}
+.add, .remove {
+    margin: 0 auto;
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+}
+td button {
+    font-size: 10pt;
+    vertical-align: inherit;
+    width: 100%;
+}
+td input {
+    box-sizing: border-box;
+    font-size: 20pt;
+    font-family: "Cambria", Cambria, serif;
+}
+.dash {
+    font-size: 30pt;
+    margin: 0;
+    text-align: center;
+}
+.play {
+    text-align: center;
+    margin: 1%;
+}
+.loginform, .checkin {
+    margin-top: 5%;
+    text-align: center;
+}
+form.play p {
+    display: inline;
+}

@@ -1,7 +1,14 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/css/style.css')
+    block head
   body
+    ul
+      if isLoggedIn
+        li: a(href='/')= `Rankings (logged in as ${user})`
+      else
+        li: a(href='/') Rankings
+      li: a(href='/log') Game Log
+      li: a(href='/checkin') Check In
     block content

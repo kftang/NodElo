@@ -1,0 +1,28 @@
+extends layout
+
+block head
+  script(src='/js/rankings.js')
+  title Round Rock Rankings
+
+block content
+  h1 Rankings
+  table
+    tr
+      th Rank
+      th Name
+      th Rating
+      th Change
+    each player, rank in players
+      tr
+        td= rank + 1
+        td= player.name
+        td= player.elo
+        if player.hasChange
+          if player.change
+            td: img(src='res/inc.png')
+          else
+            td: img(src='res/dec.png')
+        else
+          td: p.dash -
+  if isLoggedIn
+    button.add(onclick='addPlayer()') Add Player
