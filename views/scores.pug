@@ -5,15 +5,17 @@ block head
   title Round Rock Rankings
 
 block content
+  if locals.error
+    h1= error
   h1 Rankings
   table
-    tr
+    tr.head
       th Rank
       th Name
       th Rating
       th Change
     each player, rank in players
-      tr
+      tr.player
         td= rank + 1
         td= player.name
         td= player.elo
@@ -26,3 +28,4 @@ block content
           td: p.dash -
   if isLoggedIn
     button.add(onclick='addPlayer()') Add Player
+    button.remove(onclick='removePlayer()') Remove Player
