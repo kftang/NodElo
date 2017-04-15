@@ -15,4 +15,6 @@ html
         li: a(href='/dashboard') Dashboard
       else
         li: a(href='/login') Log In
+      if user
+        li: a(href='/login/signout') Sign out
     block content

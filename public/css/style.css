@@ -29,6 +29,10 @@ li a:link, li a:visited{
     font-style: normal;
     text-decoration: none;
 }
+li.right {
+  position: absolute;
+  right: 0;
+}
 h1 {
     font-family: "Helvetica", Helvetica, serif;
     text-align: center;
@@ -89,6 +93,10 @@ td input {
 }
 .failed {
   color: red;
+  text-align: center;
+}
+.success {
+  color: lightgreen;
   text-align: center;
 }
 form.play p {

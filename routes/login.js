@@ -2,26 +2,9 @@ var express = require('express');
 var router = express.Router();
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('sql/players.sqlite3');
-var crypto = require('crypto');
 var secrets = require('.././secrets.json');
+var crypt = require('../crypt');
 const pug = require('pug');
-var crypt = {
-  hash: function(password) {
-    var salt = crypto.randomBytes(8).toString('hex');
-    var hasher = crypto.createHmac('sha512', salt);
-    hasher.update(password);
-    var hash = hasher.digest('hex');
-    return {
-      salt: salt,
-      hash: hash
-    };
-  },
-  verify: function(password, hash, salt) {
-    var hasher = crypto.createHmac('sha512', salt);
-    hasher.update(password);
-    return hash === hasher.digest('hex');
-  }
-};
 
 
 
@@ -38,9 +21,16 @@ db.run('CREATE TABLE IF NOT EXISTS "logins" ("id" INTEGER PRIMARY KEY AUTOINCREM
 });
 
 router.get('/', function(req, res, next) {
+  console.log(req.body);
   if(req.session && req.session.username)
     return res.redirect('/dashboard');
   return res.render('login', {user: req.session.username});
+});
+
+router.get('/signout', function(req, res, next) {
+  console.log('signout');
+  delete req.session.username;
+  res.redirect('/');
 });
 
 router.post('/', function(req, res, next) {

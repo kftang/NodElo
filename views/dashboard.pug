@@ -4,6 +4,10 @@ block head
   title Dashboard
 block content
   h1 Admin Dashboard
+  if error
+    h3.failed= error
+  if success
+    h3.success= success
   div.adduser
     h2 Add User
     form(method='post')
