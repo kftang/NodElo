@@ -1,0 +1,26 @@
+extends layout
+
+block head
+  title Dashboard
+block content
+  h1 Admin Dashboard
+  div.adduser
+    h2 Add User
+    form(method='post')
+      label(for='newuser') Username
+      br
+      input(type='text', name='username')
+      br
+      label(for='password') Password
+      br
+      input(type='password', name='password')
+      br
+      button(action='submit') Add
+  div.deluser
+    h2 Delete User
+    form(method='post')
+      select(name='deluser')
+        option
+        each user in logins
+          option(value=user.username)= user.username
+      button(action='submit') Delete

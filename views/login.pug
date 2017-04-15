@@ -1,0 +1,18 @@
+extends layout
+
+block head
+  title Login Page
+
+block content
+  form(method='post').loginform
+    label(for='username') Username
+    br
+    input(type='text', name='username')
+    br
+    label(for='password') Password
+    br
+    input(type='password', name='password')
+    br
+    button(action='submit') Login
+  if failed
+    p.failed Login Failed

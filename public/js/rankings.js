@@ -54,7 +54,6 @@ function removePlayer() {
       var removeForm = document.createElement('form');
       var removeButton = document.createElement('button');
       removeForm.setAttribute('method', 'post');
-      console.log(element.children.item(1).innerText);
       removeButton.setAttribute('name', 'removename');
       removeButton.setAttribute('value', element.children.item(1).innerText);
       removeButton.innerText = 'Remove';
