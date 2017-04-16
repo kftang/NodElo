@@ -8,10 +8,11 @@ const pug = require('pug');
 
 
 
-
+//Default table that needs to be created
 db.run('CREATE TABLE IF NOT EXISTS "logins" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "username" TEXT NOT NULL UNIQUE, "password" TEXT NOT NULL, "salt" TEXT NOT NULL)', [], function(e) {
   if(e)
     throw e;
+  //Create the default user from secrets.json
   var crypted = crypt.hash(secrets.default.password);
   var defaultLogin = [secrets.default.username, crypted.hash, crypted.salt];
   db.run('INSERT INTO "logins" ("username", "password", "salt") VALUES (?, ?, ?)', defaultLogin, function(e) {
@@ -21,14 +22,14 @@ db.run('CREATE TABLE IF NOT EXISTS "logins" ("id" INTEGER PRIMARY KEY AUTOINCREM
 });
 
 router.get('/', function(req, res, next) {
-  console.log(req.body);
+  //Redirect to dashboard if logged in
   if(req.session && req.session.username)
     return res.redirect('/dashboard');
   return res.render('login', {user: req.session.username});
 });
 
 router.get('/signout', function(req, res, next) {
-  console.log('signout');
+  //Signout by deleteing session and redirect to home page
   delete req.session.username;
   res.redirect('/');
 });
@@ -36,17 +37,19 @@ router.get('/signout', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var post = req.body;
   var sess = req.session;
-  var invalid = false;
+  //If given a username and password
   if(post.username && post.password) {
     db.all('SELECT * FROM "logins" WHERE "username" = ?', [post.username], function(e, login) {
+      //If login succeeds, redirect to dashboard and create session
       if(login[0] && crypt.verify(post.password, login[0].password, login[0].salt)) {
           sess.username = post.username;
           return res.redirect('/dashboard');
       }
-      return res.render('login', {failed: true, user: sess.username});
+      //Show login failed
+      res.render('login', {failed: true, user: sess.username});
     });
   } else
-  return res.render('login', {failed: true, user: sess.username});
+    return res.render('login', {failed: true, user: sess.username});
 });
 
 module.exports = router;

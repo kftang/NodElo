@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
   db.all('SELECT * FROM "players"', [], function(e, players) {
     if(e)
       throw e;
-    return res.render('scores', {players: players, user: req.session.username });
+    res.render('scores', {players: players, user: req.session.username });
   });
 });
 
@@ -34,7 +34,6 @@ router.post('/', function(req, res, next) {
         if(e.errno === 19)
           error = 'Name already exists!';
     });
-    console.log('New player ' + post.addname + ' added.');
   }
   //If the user wants to remove a player
   if(post.removename) {
@@ -47,7 +46,7 @@ router.post('/', function(req, res, next) {
   db.all('SELECT * FROM "players"', [], function(e, players) {
     if(e)
       throw e;
-    return res.render('scores', {players: players, user: req.session.username, error: error });
+      res.render('scores', {players: players, user: req.session.username, error: error });
   });
 });
 

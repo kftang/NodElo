@@ -9,7 +9,7 @@ ul{
     overflow: hidden;
     background-color: gray;
 }
-li{
+li :not(.right) {
     float: left;
     display: block;
     color: white;
