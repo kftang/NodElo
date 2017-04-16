@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
   db.all('SELECT * FROM "players"', [], function(e, players) {
     if(e)
       throw e;
-    res.render('scores', {players: players, user: req.session.username });
+    res.render('rankings', {players: players, user: req.session.username });
   });
 });
 
@@ -46,7 +46,7 @@ router.post('/', function(req, res, next) {
   db.all('SELECT * FROM "players"', [], function(e, players) {
     if(e)
       throw e;
-      res.render('scores', {players: players, user: req.session.username, error: error });
+      res.render('rankings', {players: players, user: req.session.username, error: error });
   });
 });
 
