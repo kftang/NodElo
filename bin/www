@@ -3,88 +3,126 @@
 /**
  * Module dependencies.
  */
-
-var app = require('../app');
-var debug = require('debug')('nodelo:server');
-var http = require('http');
-
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+const fs = require('fs');
+var crypt = require('.././crypt');
+var secrets = require('.././secrets.json');
 
 /**
- * Create HTTP server.
+ * Hacky init for intializing database
  */
 
-var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
+init = function(callback) {
+ fs.access('sql/players.sqlite3', fs.constants.R_OK | fs.constants.W_OK, function(e) {
+   if(e) {
+     var sqlite3 = require('sqlite3').verbose();
+     var db = new sqlite3.Database('sql/players.sqlite3');
+     db.run('CREATE TABLE IF NOT EXISTS "players" ("name" TEXT NOT NULL UNIQUE, "elo" INT NOT NULL DEFAULT 1200, "change" BOOLEAN DEFAULT NULL)', function(e) {
+       if(e)
+         throw e;
+       db.run('CREATE TABLE IF NOT EXISTS "logins" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "username" TEXT NOT NULL UNIQUE, "password" TEXT NOT NULL, "salt" TEXT NOT NULL)', [], function(e) {
+         if(e)
+           throw e;
+         //Create the default user from secrets.json
+         var crypted = crypt.hash(secrets.default.password);
+         var defaultLogin = [secrets.default.username, crypted.hash, crypted.salt];
+         db.run('INSERT INTO "logins" ("username", "password", "salt") VALUES (?, ?, ?)', defaultLogin, function(e) {
+           if(e && e.errno != 19)
+             throw e;
+         });
+         callback();
+       });
+     });
+   } else {
+     callback();
+   }
+ });
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
+init(function() {
+  var app = require('../app');
+  var debug = require('debug')('nodelo:server');
+  var http = require('http');
+  var async = require('async');
 
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
+  /**
+   * Get port from environment and store in Express.
+   */
+
+  var port = normalizePort(process.env.PORT || '3000');
+  app.set('port', port);
+
+  /**
+   * Create HTTP server.
+   */
+
+
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+
+  var server = http.createServer(app);
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+
+
+  /**
+   * Normalize a port into a number, string, or false.
+   */
+
+  function normalizePort(val) {
+    var port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+      // named pipe
+      return val;
+    }
+
+    if (port >= 0) {
+      // port number
+      return port;
+    }
+
+    return false;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  /**
+   * Event listener for HTTP server "error" event.
+   */
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
+  function onError(error) {
+    if (error.syscall !== 'listen') {
       throw error;
+    }
+
+    var bind = typeof port === 'string'
+      ? 'Pipe ' + port
+      : 'Port ' + port;
+
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+      case 'EACCES':
+        console.error(bind + ' requires elevated privileges');
+        process.exit(1);
+        break;
+      case 'EADDRINUSE':
+        console.error(bind + ' is already in use');
+        process.exit(1);
+        break;
+      default:
+        throw error;
+    }
   }
-}
 
-/**
- * Event listener for HTTP server "listening" event.
- */
+  /**
+   * Event listener for HTTP server "listening" event.
+   */
 
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+  function onListening() {
+    var addr = server.address();
+    var bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+  }
+});

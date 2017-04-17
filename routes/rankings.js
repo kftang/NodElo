@@ -1,13 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('sql/players.sqlite3');
-const pug = require('pug');
-
-db.run('CREATE TABLE IF NOT EXISTS "players" ("name" TEXT NOT NULL UNIQUE, "elo" INT NOT NULL DEFAULT 1200, "change" BOOLEAN DEFAULT NULL)', function(e) {
+var db = new sqlite3.Database('sql/players.sqlite3', sqlite3.OPEN_READWRITE, function(e) {
   if(e)
     throw e;
 });
+const pug = require('pug');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

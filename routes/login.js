@@ -1,25 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('sql/players.sqlite3');
+var db = new sqlite3.Database('sql/players.sqlite3', sqlite3.OPEN_READWRITE, function(e) {
+  if(e)
+    throw e;
+});
 var secrets = require('.././secrets.json');
 var crypt = require('../crypt');
 const pug = require('pug');
-
-
-
-//Default table that needs to be created
-db.run('CREATE TABLE IF NOT EXISTS "logins" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "username" TEXT NOT NULL UNIQUE, "password" TEXT NOT NULL, "salt" TEXT NOT NULL)', [], function(e) {
-  if(e)
-    throw e;
-  //Create the default user from secrets.json
-  var crypted = crypt.hash(secrets.default.password);
-  var defaultLogin = [secrets.default.username, crypted.hash, crypted.salt];
-  db.run('INSERT INTO "logins" ("username", "password", "salt") VALUES (?, ?, ?)', defaultLogin, function(e) {
-    if(e && e.errno != 19)
-      throw e;
-  });
-});
 
 router.get('/', function(req, res, next) {
   //Redirect to dashboard if logged in

@@ -7,7 +7,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session')
 var bodyParser = require('body-parser');
+const fs = require('fs')
 
+var crypt = require('./crypt')
 var index = require('./routes/rankings');
 var login = require('./routes/login');
 var dashboard = require('./routes/dashboard');
