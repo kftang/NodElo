@@ -1,4 +1,5 @@
 //TODO: Better error checking (check if it already exists vs only seeing err no)
+//TODO: Run defaults in app.js
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
