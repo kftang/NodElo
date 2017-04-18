@@ -1,0 +1,19 @@
+extends layout
+block head
+  title Game Log
+block content
+  h1 Game Log
+  table
+    tr.head
+      th Time
+      th Matchup
+      th Winner
+      th Winner ∆Rating
+      th Loser ∆Rating
+    each entry in log
+      tr
+        td= entry.time
+        td= entry.matchup
+        td= entry.winner
+        td= Math.trunc(entry.dwinner)
+        td= Math.trunc(entry.dloser)

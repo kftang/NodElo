@@ -1,5 +1,4 @@
 //TODO: Better error checking (check if it already exists vs only seeing err no)
-//TODO: Run defaults in app.js
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -11,6 +10,7 @@ const fs = require('fs')
 
 var crypt = require('./crypt')
 var index = require('./routes/rankings');
+var log = require('./routes/log');
 var login = require('./routes/login');
 var dashboard = require('./routes/dashboard');
 
@@ -34,6 +34,7 @@ app.use(session({
 }));
 
 app.use('/', index);
+app.use('/log', log);
 app.use('/login', login);
 app.use('/dashboard', dashboard);
 

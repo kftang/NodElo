@@ -2,6 +2,7 @@
  * Created by kenyunot on 27/01/2017.
  */
  var removing = false;
+ var winner;
 function addPlayer() {
   //Form for the input
   var nameForm = document.createElement('form');
@@ -63,4 +64,19 @@ function removePlayer() {
     }
     removing = true;
   }
+}
+function play(rank) {
+  var buttons = document.getElementsByClassName('won');
+  for(var i = 0; i < buttons.length; i++) {
+    if(i == rank)
+      continue;
+    buttons.item(i).setAttribute('onclick', 'against(' + rank + ', ' + i + ')');
+    buttons.item(i).innerText = document.getElementsByClassName('player').item(i).childNodes.item(1).innerText;
+  }
+  buttons.item(rank).parentNode.removeChild(buttons.item(rank));
+}
+function against(winner, loser) {
+  document.body.innerHTML += '<form id="play" method="post"><input type="hidden" name="winner" value="' + winner + '"><input type="hidden" name="loser" value="' + loser + '"></form>'
+  document.getElementById('play').submit();
+  console.log(winner + ' won against ' + loser);
 }

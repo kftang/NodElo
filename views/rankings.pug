@@ -14,18 +14,22 @@ block content
       th Name
       th Rating
       th Change
+      if user
+        th Play
     each player, rank in players
       tr.player
         td= rank + 1
         td= player.name
-        td= player.elo
-        if change in player
+        td= Math.trunc(player.elo)
+        if player.change != null
           if player.change
             td: img(src='res/inc.png')
           else
             td: img(src='res/dec.png')
         else
           td: p.dash -
+        if user
+          td: button(onclick=`play(${rank})`).won Won vs.
   if user
     button.add(onclick='addPlayer()') Add Player
     button.remove(onclick='removePlayer()') Remove Player
