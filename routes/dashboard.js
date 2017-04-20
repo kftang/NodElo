@@ -5,6 +5,7 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('sql/players.sqlite3');
 var secrets = require('.././secrets.json');
 var crypt = require('../crypt');
+var ranks = require('./rankings').ranks;
 
 router.get('/', function(req, res, next) {
   var sess = req.session;
@@ -23,9 +24,15 @@ router.post('/', function(req, res, next) {
   //Error and success buffers
   var err;
   var suc;
+  console.log(post);
   //Redirect if not logged in
   if(!sess || !sess.username)
     return res.redirect('/login');
+  //If we're saving ranks
+  if(post.save != undefined) {
+    console.log('saving');
+    ranks.save();
+  }
   //If we're deleting a user
   if(post.deluser) {
     //Check for default user or self

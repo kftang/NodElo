@@ -114,3 +114,6 @@ div.deluser form select {
   display: inline-block;
   margin-right: 1%;
 }
+.saveranks {
+  text-align: center;
+}

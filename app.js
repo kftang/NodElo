@@ -33,7 +33,8 @@ app.use(session({
   secret: 'pingpongrocks'
 }));
 
-app.use('/', index);
+app.use('/', index.router);
+index.ranks.init();
 app.use('/log', log);
 app.use('/login', login);
 app.use('/dashboard', dashboard);

@@ -17,7 +17,7 @@ init = function(callback) {
     var sqlite3 = require('sqlite3').verbose();
     var db = new sqlite3.Database('sql/players.sqlite3');
     db.serialize(function() {
-      db.run('CREATE TABLE IF NOT EXISTS "players" ("name" TEXT NOT NULL UNIQUE, "rating" INTEGER NOT NULL DEFAULT 1500, "rd" INTEGER, "vol" REAL NOT NULL DEFAULT .06, NOT NULL DEFAULT 200, "change" BOOLEAN DEFAULT NULL)', function(e) {
+      db.run('CREATE TABLE IF NOT EXISTS "players" ("name" TEXT NOT NULL UNIQUE, "rating" INTEGER NOT NULL DEFAULT 1500, "vol" REAL NOT NULL DEFAULT .06, "rd" INTEGER NOT NULL DEFAULT 200, "change" BOOLEAN DEFAULT NULL)', function(e) {
         if(e)
           throw e;
       });
@@ -25,7 +25,7 @@ init = function(callback) {
         if(e)
           throw e;
       });
-      db.run('CREATE TABLE IF NOT EXISTS "gamelog" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "time" TIME DEFAULT (datetime(\'now\')), "matchup" TEXT NOT NULL, "winner" TEXT NOT NULL, "dwinner" INTEGER NOT NULL, "dloser" INTEGER NOT NULL)', [], function(e) {
+      db.run('CREATE TABLE IF NOT EXISTS "gamelog" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "time" TIME DEFAULT (datetime(\'now\')), "matchup" TEXT NOT NULL, "winner" TEXT NOT NULL)', [], function(e) {
         if(e)
           throw e;
       });
@@ -35,10 +35,12 @@ init = function(callback) {
       db.run('INSERT INTO "logins" ("username", "password", "salt") VALUES (?, ?, ?)', defaultLogin, function(e) {
         if(e && e.errno != 19)
           throw e;
+      callback();
       });
     });
+  } else {
+    callback();
   }
-  callback();
  });
 }
 

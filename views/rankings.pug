@@ -20,7 +20,7 @@ block content
       tr.player
         td= rank + 1
         td= player.name
-        td= Math.trunc(player.elo)
+        td= Math.trunc(player.rating)
         if player.change != null
           if player.change
             td: img(src='res/inc.png')
@@ -33,3 +33,7 @@ block content
   if user
     button.add(onclick='addPlayer()') Add Player
     button.remove(onclick='removePlayer()') Remove Player
+    form(method='post').saveranks
+      button(action='submit', name='save').saveranks Save Ranks
+    form(method='post').saveranks
+      button(action='submit', name='reset') Reset Pending Matches

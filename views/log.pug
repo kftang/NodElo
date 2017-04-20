@@ -8,12 +8,8 @@ block content
       th Time
       th Matchup
       th Winner
-      th Winner ∆Rating
-      th Loser ∆Rating
     each entry in log
       tr
         td= entry.time
         td= entry.matchup
         td= entry.winner
-        td= Math.trunc(entry.dwinner)
-        td= Math.trunc(entry.dloser)
