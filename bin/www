@@ -29,6 +29,10 @@ init = function(callback) {
         if(e)
           throw e;
       });
+      db.run('CREATE TABLE IF NOT EXISTS "daily" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "name" TEXT NOT NULL UNIQUE)', [], function(e) {
+        if(e)
+          throw e;
+      });
       //Create the default user from secrets.json
       var crypted = crypt.hash(secrets.default.password);
       var defaultLogin = [secrets.default.username, crypted.hash, crypted.salt];

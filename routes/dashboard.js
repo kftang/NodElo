@@ -24,14 +24,17 @@ router.post('/', function(req, res, next) {
   //Error and success buffers
   var err;
   var suc;
-  console.log(post);
   //Redirect if not logged in
   if(!sess || !sess.username)
     return res.redirect('/login');
   //If we're saving ranks
-  if(post.save != undefined) {
-    console.log('saving');
+  if(post.save !== undefined) {
     ranks.save();
+  } else if(post.reset !== undefined) {
+    db.run('DELETE FROM "daily"', function(e) {
+      if(e)
+        throw e;
+    });
   }
   //If we're deleting a user
   if(post.deluser) {

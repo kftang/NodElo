@@ -1,4 +1,3 @@
-//TODO: Integrate with the glicko library
 var express = require('express');
 var router = express.Router();
 var sqlite3 = require('sqlite3').verbose();

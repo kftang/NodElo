@@ -5,6 +5,7 @@ var db = new sqlite3.Database('sql/players.sqlite3');
 const pug = require('pug');
 
 router.get('/', function(req, res, next) {
+  //Display every element from gamelog
   db.all('SELECT * FROM "gamelog"', function(e, result) {
     if(e)
       throw e;

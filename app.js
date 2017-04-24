@@ -13,6 +13,7 @@ var index = require('./routes/rankings');
 var log = require('./routes/log');
 var login = require('./routes/login');
 var dashboard = require('./routes/dashboard');
+var checkin = require('./routes/checkin');
 
 var app = express();
 
@@ -38,6 +39,7 @@ index.ranks.init();
 app.use('/log', log);
 app.use('/login', login);
 app.use('/dashboard', dashboard);
+app.use('/checkin', checkin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -28,6 +28,7 @@ block content
         each user in logins
           option(value=user.username)= user.username
       button(action='submit') Delete
-  div.saveranks
+  div.actions
     form(method='post')
-      button(action='submit', name='save') Save Ranks
+      button(action='submit', name='save').spaced Save Ranks
+      button(action='submit', name='reset').spaced Reset Check In

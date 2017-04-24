@@ -31,9 +31,9 @@ block content
         if user
           td: button(onclick=`play(${rank})`).won Won vs.
   if user
-    button.add(onclick='addPlayer()') Add Player
-    button.remove(onclick='removePlayer()') Remove Player
-    form(method='post').saveranks
-      button(action='submit', name='save').saveranks Save Ranks
-    form(method='post').saveranks
-      button(action='submit', name='reset') Reset Pending Matches
+    button(onclick='addPlayer()').blockspace Add Player
+    button(onclick='removePlayer()').blockspace Remove Player
+    form(method='post').actions
+      button(action='submit', name='save').blockspace Save Ranks
+    form(method='post').actions
+      button(action='submit', name='reset').blockspace Reset Pending Matches
