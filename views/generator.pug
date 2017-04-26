@@ -1,1 +1,12 @@
-
+extends layout
+block head
+  title Match Maker
+block content
+  h1 Match Maker
+  form(method='post').generateform
+    button(type='submit', name='generate') Generate Matches
+  div.matches
+    h3 Matches
+    if pairs
+      each pair in pairs
+        p= pair.player + ' vs. ' + pair.opponent

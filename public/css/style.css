@@ -39,6 +39,7 @@ li.right {
   float: right;
 }
 h1 {
+    position: relative;
     font-family: "Helvetica", Helvetica, serif;
     text-align: center;
 }
@@ -92,9 +93,8 @@ td input {
     text-align: center;
     margin: 1%;
 }
-.loginform, .checkin {
+.loginform, .checkin, .generateform {
     position: absolute;
-    margin-top: 5%;
     text-align: center;
     width: 100%;
 }
@@ -133,4 +133,10 @@ div.deluser form select {
 .checkinlist {
   float: left;
   margin: 5%;
+}
+.matches {
+  position: absolute;
+  margin-top: 1%;
+  width: 100%;
+  text-align: center;
 }
