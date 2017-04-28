@@ -15,6 +15,7 @@ var login = require('./routes/login');
 var dashboard = require('./routes/dashboard');
 var checkin = require('./routes/checkin');
 var generator = require('./routes/generator');
+var tournament = require('./routes/tournament');
 
 var app = express();
 
@@ -42,6 +43,7 @@ app.use('/login', login);
 app.use('/dashboard', dashboard);
 app.use('/checkin', checkin);
 app.use('/generator', generator);
+app.use('/tournament', tournament);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
