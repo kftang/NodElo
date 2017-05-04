@@ -58,7 +58,6 @@ function renderPlayers(res, user) {
   var renderObj = {user: user};
   for(var i = 2; i < arguments.length - 1; i+=2)
     renderObj[arguments[i]] = arguments[i + 1];
-  console.log(renderObj);
   db.all('SELECT * FROM "players"', [], function(e, players) {
     renderObj.players = players;
     if (e)

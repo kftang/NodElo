@@ -39,7 +39,7 @@ init = function(callback) {
       db.run('INSERT INTO "logins" ("username", "password", "salt") VALUES (?, ?, ?)', defaultLogin, function(e) {
         if(e && e.errno != 19)
           throw e;
-      callback();
+        callback();
       });
     });
   } else {
