@@ -2,6 +2,7 @@
 
 /**
  * Module dependencies.
+ * TODO: Migrate to MongoDB
  */
 const fs = require('fs');
 var crypt = require('.././crypt');
