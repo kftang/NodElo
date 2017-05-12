@@ -1,6 +1,6 @@
 {
   "name": "nodelo",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -12,6 +12,21 @@
     "express": "~4.14.1",
     "morgan": "~1.7.0",
     "pug": "~2.0.0-beta10",
-    "serve-favicon": "~2.3.2"
-  }
+    "serve-favicon": "~2.3.2",
+    "sqlite3": "~3.1.8",
+    "glicko2": "~0.8.4"
+  },
+  "description": "Ping Pong Playas",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kftang/NodElo.git"
+  },
+  "author": "Kenny Tang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kftang/NodElo/issues"
+  },
+  "homepage": "https://github.com/kftang/NodElo#readme"
 }
